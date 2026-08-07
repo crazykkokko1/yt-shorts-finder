@@ -4,19 +4,19 @@ on:
   schedule:
     # 매일 새벽 3시 (UTC 기준 18:00)에 자동 실행
     - cron: '0 18 * * *'
-  workflow_dispatch: # GitHub 웹에서 수동으로 즉시 실행 버튼을 누를 수도 있습니다.
+  workflow_dispatch: # 수동 실행 버튼 활성화
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -27,7 +27,7 @@ jobs:
         run: npx tsx scripts/auto-pipeline.ts
 
       - name: Commit and push updated knowledge DB
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🤖 [Automated] Update knowledge DB and raw reports"
           branch: main
